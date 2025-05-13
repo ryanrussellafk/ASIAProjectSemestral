@@ -1,6 +1,3 @@
-// API base URL
-const API_BASE_URL = 'http://localhost:3000/api';
-
 // Chart colors
 const chartColors = {
     blue: 'rgb(54, 162, 235)',
@@ -11,22 +8,13 @@ const chartColors = {
     grey: 'rgb(201, 203, 207)'
 };
 
-// Fetch data from API
-async function fetchData(endpoint) {
-    try {
-        const response = await fetch(`${API_BASE_URL}${endpoint}`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return null;
-    }
-}
-
 // Initialize Monthly Appointments Chart
-async function initMonthlyAppointmentsChart() {
-    const data = await fetchData('/appointments/monthly');
-    if (!data) return;
+function initMonthlyAppointmentsChart() {
+    const data = [
+        { month: '2024-03', count: 15 },
+        { month: '2024-04', count: 10 },
+        { month: '2024-05', count: 5 }
+    ];
 
     new Chart(document.getElementById('monthlyAppointmentsChart'), {
         type: 'line',
@@ -52,9 +40,13 @@ async function initMonthlyAppointmentsChart() {
 }
 
 // Initialize Treatment Types Chart
-async function initTreatmentTypesChart() {
-    const data = await fetchData('/treatments/type');
-    if (!data) return;
+function initTreatmentTypesChart() {
+    const data = [
+        { type: 'Cleaning', count: 5 },
+        { type: 'Extraction', count: 3 },
+        { type: 'Filling', count: 5 },
+        { type: 'Root Canal', count: 2 }
+    ];
 
     new Chart(document.getElementById('treatmentTypesChart'), {
         type: 'bar',
@@ -84,9 +76,11 @@ async function initTreatmentTypesChart() {
 }
 
 // Initialize Payment Status Chart
-async function initPaymentStatusChart() {
-    const data = await fetchData('/payments/status');
-    if (!data) return;
+function initPaymentStatusChart() {
+    const data = [
+        { status: 'Paid', count: 7 },
+        { status: 'Unpaid', count: 3 }
+    ];
 
     new Chart(document.getElementById('paymentStatusChart'), {
         type: 'doughnut',
@@ -96,8 +90,7 @@ async function initPaymentStatusChart() {
                 data: data.map(item => item.count),
                 backgroundColor: [
                     chartColors.green,
-                    chartColors.orange,
-                    chartColors.red
+                    chartColors.orange
                 ]
             }]
         },
@@ -114,9 +107,11 @@ async function initPaymentStatusChart() {
 }
 
 // Initialize Age Distribution Chart
-async function initAgeDistributionChart() {
-    const data = await fetchData('/patients/age-distribution');
-    if (!data) return;
+function initAgeDistributionChart() {
+    const data = [
+        { age_group: '18-30', count: 5 },
+        { age_group: '31-50', count: 5 }
+    ];
 
     new Chart(document.getElementById('ageDistributionChart'), {
         type: 'pie',
@@ -126,9 +121,7 @@ async function initAgeDistributionChart() {
                 data: data.map(item => item.count),
                 backgroundColor: [
                     chartColors.blue,
-                    chartColors.green,
-                    chartColors.orange,
-                    chartColors.purple
+                    chartColors.green
                 ]
             }]
         },
@@ -145,9 +138,19 @@ async function initAgeDistributionChart() {
 }
 
 // Initialize Recent Appointments Table
-async function initRecentAppointmentsTable() {
-    const data = await fetchData('/appointments/recent');
-    if (!data) return;
+function initRecentAppointmentsTable() {
+    const data = [
+        {
+            formatted_date: '2024-05-01 10:00',
+            patient_name: 'Jane Doe',
+            status: 'Completed'
+        },
+        {
+            formatted_date: '2024-05-02 14:30',
+            patient_name: 'John Smith',
+            status: 'Scheduled'
+        }
+    ];
 
     const tbody = document.querySelector('#recentAppointmentsTable');
     tbody.innerHTML = '';
@@ -173,15 +176,13 @@ async function initRecentAppointmentsTable() {
 }
 
 // Initialize all charts and tables
-async function initializeDashboard() {
-    await Promise.all([
-        initMonthlyAppointmentsChart(),
-        initTreatmentTypesChart(),
-        initPaymentStatusChart(),
-        initAgeDistributionChart(),
-        initRecentAppointmentsTable()
-    ]);
+function initializeDashboard() {
+    initMonthlyAppointmentsChart();
+    initTreatmentTypesChart();
+    initPaymentStatusChart();
+    initAgeDistributionChart();
+    initRecentAppointmentsTable();
 }
 
 // Initialize dashboard when page loads
-document.addEventListener('DOMContentLoaded', initializeDashboard); 
+document.addEventListener('DOMContentLoaded', initializeDashboard);
