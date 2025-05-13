@@ -8,14 +8,63 @@ const chartColors = {
     grey: 'rgb(201, 203, 207)'
 };
 
-// Initialize Monthly Appointments Chart
-function initMonthlyAppointmentsChart() {
-    const data = [
-        { month: '2024-03', count: 15 },
-        { month: '2024-04', count: 10 },
-        { month: '2024-05', count: 5 }
-    ];
+// Mock data directly used for GitHub Pages (no backend/API)
+function getMockData(endpoint) {
+    switch (endpoint) {
+        case 'monthlyAppointments':
+            return [
+                { month: 'Jan', count: 30 },
+                { month: 'Feb', count: 45 },
+                { month: 'Mar', count: 40 },
+                { month: 'Apr', count: 50 },
+                { month: 'May', count: 60 }
+            ];
+        case 'treatmentTypes':
+            return [
+                { type: 'Cleaning', count: 25 },
+                { type: 'Filling', count: 15 },
+                { type: 'Extraction', count: 10 },
+                { type: 'Braces', count: 5 }
+            ];
+        case 'paymentStatus':
+            return [
+                { status: 'Paid', count: 40 },
+                { status: 'Pending', count: 10 },
+                { status: 'Unpaid', count: 5 }
+            ];
+        case 'ageDistribution':
+            return [
+                { age_group: '0-17', count: 10 },
+                { age_group: '18-35', count: 25 },
+                { age_group: '36-60', count: 15 },
+                { age_group: '61+', count: 5 }
+            ];
+        case 'recentAppointments':
+            return [
+                {
+                    formatted_date: '2024-05-10 09:00:00',
+                    patient_name: 'John Doe',
+                    status: 'Completed'
+                },
+                {
+                    formatted_date: '2024-05-11 10:30:00',
+                    patient_name: 'Jane Smith',
+                    status: 'Scheduled'
+                },
+                {
+                    formatted_date: '2024-05-12 13:00:00',
+                    patient_name: 'Tom Lee',
+                    status: 'Cancelled'
+                }
+            ];
+        default:
+            return [];
+    }
+}
 
+// Chart: Monthly Appointments
+function initMonthlyAppointmentsChart() {
+    const data = getMockData('monthlyAppointments');
     new Chart(document.getElementById('monthlyAppointmentsChart'), {
         type: 'line',
         data: {
@@ -39,15 +88,9 @@ function initMonthlyAppointmentsChart() {
     });
 }
 
-// Initialize Treatment Types Chart
+// Chart: Treatment Types
 function initTreatmentTypesChart() {
-    const data = [
-        { type: 'Cleaning', count: 5 },
-        { type: 'Extraction', count: 3 },
-        { type: 'Filling', count: 5 },
-        { type: 'Root Canal', count: 2 }
-    ];
-
+    const data = getMockData('treatmentTypes');
     new Chart(document.getElementById('treatmentTypesChart'), {
         type: 'bar',
         data: {
@@ -75,13 +118,9 @@ function initTreatmentTypesChart() {
     });
 }
 
-// Initialize Payment Status Chart
+// Chart: Payment Status
 function initPaymentStatusChart() {
-    const data = [
-        { status: 'Paid', count: 7 },
-        { status: 'Unpaid', count: 3 }
-    ];
-
+    const data = getMockData('paymentStatus');
     new Chart(document.getElementById('paymentStatusChart'), {
         type: 'doughnut',
         data: {
@@ -90,7 +129,8 @@ function initPaymentStatusChart() {
                 data: data.map(item => item.count),
                 backgroundColor: [
                     chartColors.green,
-                    chartColors.orange
+                    chartColors.orange,
+                    chartColors.red
                 ]
             }]
         },
@@ -106,13 +146,9 @@ function initPaymentStatusChart() {
     });
 }
 
-// Initialize Age Distribution Chart
+// Chart: Age Distribution
 function initAgeDistributionChart() {
-    const data = [
-        { age_group: '18-30', count: 5 },
-        { age_group: '31-50', count: 5 }
-    ];
-
+    const data = getMockData('ageDistribution');
     new Chart(document.getElementById('ageDistributionChart'), {
         type: 'pie',
         data: {
@@ -121,7 +157,9 @@ function initAgeDistributionChart() {
                 data: data.map(item => item.count),
                 backgroundColor: [
                     chartColors.blue,
-                    chartColors.green
+                    chartColors.green,
+                    chartColors.orange,
+                    chartColors.purple
                 ]
             }]
         },
@@ -137,21 +175,9 @@ function initAgeDistributionChart() {
     });
 }
 
-// Initialize Recent Appointments Table
+// Table: Recent Appointments
 function initRecentAppointmentsTable() {
-    const data = [
-        {
-            formatted_date: '2024-05-01 10:00',
-            patient_name: 'Jane Doe',
-            status: 'Completed'
-        },
-        {
-            formatted_date: '2024-05-02 14:30',
-            patient_name: 'John Smith',
-            status: 'Scheduled'
-        }
-    ];
-
+    const data = getMockData('recentAppointments');
     const tbody = document.querySelector('#recentAppointmentsTable');
     tbody.innerHTML = '';
 
@@ -175,7 +201,7 @@ function initRecentAppointmentsTable() {
     });
 }
 
-// Initialize all charts and tables
+// Initialize dashboard
 function initializeDashboard() {
     initMonthlyAppointmentsChart();
     initTreatmentTypesChart();
@@ -184,5 +210,5 @@ function initializeDashboard() {
     initRecentAppointmentsTable();
 }
 
-// Initialize dashboard when page loads
+// Trigger on DOM ready
 document.addEventListener('DOMContentLoaded', initializeDashboard);
