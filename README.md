@@ -1,4 +1,8 @@
 # Dental System Dashboard
+members: Ryan Russell R. Robledo
+         Jasper James R. Jayme
+         Rommel Rabino
+section: NT-3201
 
 ## Overview
 This project is a web-based dashboard for a Dental System. It visualizes meaningful data using Chart.js on the frontend, powered by a Node.js backend with MySQL as the data source. The dashboard displays various metrics such as appointment trends, treatment types, payment statuses, and patient demographics.
@@ -23,18 +27,12 @@ The dashboard uses data from our Dental System database, which includes tables f
    ```bash
    npm install
    ```
-3. Configure the database:
-   - Create a MySQL database named `dental_system`
-   - Update the database connection settings in `config/database.js`
-   - Run the seed script to populate sample data:
-     ```bash
-     npm run seed
-     ```
-4. Start the backend server:
+
+3. Start the backend server:
    ```bash
    npm start
    ```
-5. Open the frontend in your browser:
+4. Open the frontend in your browser:
    - Navigate to `http://localhost:3000`
 
 ## Dependencies
@@ -47,12 +45,3 @@ The dashboard uses data from our Dental System database, which includes tables f
   - Chart.js
   - Bootstrap
   - Axios
-
-## API Documentation
-The API provides endpoints to fetch data for the dashboard charts. For detailed documentation, see the `api-docs.md` file.
-
-## ERD Diagram
-An Entity Relationship Diagram (ERD) is included in the `docs` folder.
-
-## License
-MIT
